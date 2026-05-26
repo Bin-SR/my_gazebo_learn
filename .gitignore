@@ -1,0 +1,28 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ROS2
+install/
+log/
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Gazebo
+*.log
+.gazebo/

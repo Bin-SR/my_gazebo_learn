@@ -1,0 +1,65 @@
+﻿<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+
+  <!-- ============================================= -->
+  <!-- Include the base Panda URDF from moveit_resources -->
+  <!-- ============================================= -->
+  <xacro:include filename="/urdf/panda.urdf.xacro" />
+
+  <!-- The moveit_resources_panda_description xacro macro call -->
+  <xacro:panda_arm/>
+
+  <!-- ============================================= -->
+  <!-- Gazebo-specific configuration -->
+  <!-- ============================================= -->
+
+  <!-- Gazebo ros2_control plugin for the arm -->
+  <gazebo>
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <robot_param>robot_description</robot_param>
+      <robot_param_node>robot_state_publisher</robot_param_node>
+      <parameters>/config/panda_controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+  <!-- ============================================= -->
+  <!-- ros2_control transmissions -->
+  <!-- ============================================= -->
+  <xacro:macro name="panda_transmission" params="joint_name">
+    <transmission name="trans_">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="motor_">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+  <xacro:panda_transmission joint_name="panda_joint1"/>
+  <xacro:panda_transmission joint_name="panda_joint2"/>
+  <xacro:panda_transmission joint_name="panda_joint3"/>
+  <xacro:panda_transmission joint_name="panda_joint4"/>
+  <xacro:panda_transmission joint_name="panda_joint5"/>
+  <xacro:panda_transmission joint_name="panda_joint6"/>
+  <xacro:panda_transmission joint_name="panda_joint7"/>
+
+  <xacro:macro name="panda_finger_transmission" params="joint_name">
+    <transmission name="trans_">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="motor_">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+  <xacro:panda_finger_transmission joint_name="panda_finger_joint1"/>
+  <xacro:panda_finger_transmission joint_name="panda_finger_joint2"/>
+
+</robot>
