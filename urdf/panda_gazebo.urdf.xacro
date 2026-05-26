@@ -1,41 +1,108 @@
 ﻿<?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+  <ros2_control name="GazeboSystem" type="system">
 
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+
+    <joint name="panda_joint1">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="panda_joint2">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="panda_joint3">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="panda_joint4">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="panda_joint5">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="panda_joint6">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="panda_joint7">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="panda_finger_joint1">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="panda_finger_joint2">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+  </ros2_control>
   <!-- ============================================= -->
   <!-- Include the base Panda URDF from moveit_resources -->
   <!-- ============================================= -->
-  <xacro:include filename="/urdf/panda.urdf.xacro" />
+  <xacro:include filename="/home/ub22/ros2_ws/install/my_gazebo_learn/share/my_gazebo_learn/urdf/panda.urdf.xacro" />
 
   <!-- The moveit_resources_panda_description xacro macro call -->
-  <xacro:panda_arm/>
+
 
   <!-- ============================================= -->
   <!-- Gazebo-specific configuration -->
   <!-- ============================================= -->
 
   <!-- Gazebo ros2_control plugin for the arm -->
+<!-- 
   <gazebo>
     <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
       <robot_param>robot_description</robot_param>
       <robot_param_node>robot_state_publisher</robot_param_node>
-      <parameters>/config/panda_controllers.yaml</parameters>
+      <parameters>$(find my_gazebo_learn)/config/panda_controllers.yaml</parameters>
     </plugin>
   </gazebo>
+-->
 
   <!-- ============================================= -->
   <!-- ros2_control transmissions -->
   <!-- ============================================= -->
   <xacro:macro name="panda_transmission" params="joint_name">
-    <transmission name="trans_">
+
+    <transmission name="trans_${joint_name}">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="">
+
+      <joint name="${joint_name}">
         <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
       </joint>
-      <actuator name="motor_">
+
+      <actuator name="motor_${joint_name}">
         <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
+
     </transmission>
+
   </xacro:macro>
 
   <xacro:panda_transmission joint_name="panda_joint1"/>
@@ -47,12 +114,12 @@
   <xacro:panda_transmission joint_name="panda_joint7"/>
 
   <xacro:macro name="panda_finger_transmission" params="joint_name">
-    <transmission name="trans_">
+    <transmission name="trans_${joint_name}">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="">
+      <joint name="${joint_name}">
         <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
       </joint>
-      <actuator name="motor_">
+      <actuator name="motor_${joint_name}">
         <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
