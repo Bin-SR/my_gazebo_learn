@@ -20,6 +20,7 @@ setup(
          glob('config/*.yaml')),
         (os.path.join('share', package_name, 'urdf'),
          glob('urdf/*.xacro')),
+        ('share/' + package_name + '/urdf', ['urdf/panda.urdf']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

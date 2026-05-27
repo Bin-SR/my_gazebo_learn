@@ -19,7 +19,7 @@ Dependencies:
 
 import os
 from pathlib import Path
-
+from launch.actions import ExecuteProcess
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import (
@@ -86,16 +86,28 @@ def generate_launch_description():
     # ================================================================
     # Gazebo Launch
     # ================================================================
-    gazebo = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([
-            PathJoinSubstitution([pkg_gazebo_ros, 'launch', 'gazebo.launch.py'])
-        ]),
-        launch_arguments={
-            'world': world,
-            'verbose': 'false',
-        }.items(),
-    )
+    # gazebo = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource([
+    #         PathJoinSubstitution([pkg_gazebo_ros, 'launch', 'gazebo.launch.py'])
+    #     ]),
+    #     launch_arguments={
+    #         'world': world,
+    #         'verbose': 'false',
+    #     }.items(),
+    # )
 
+    gazebo = ExecuteProcess(
+        cmd=[
+            'gazebo',
+            '--verbose',
+
+            '-s', 'libgazebo_ros_init.so',
+            '-s', 'libgazebo_ros_factory.so',
+
+            world
+        ],
+        output='screen'
+    )
     # ================================================================
     # Spawn Panda robot in Gazebo
     # ================================================================
